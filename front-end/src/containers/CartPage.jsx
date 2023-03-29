@@ -3,27 +3,29 @@ import axios from 'axios'
 import Header from '../components/Header'
 import SpanHeader from '../components/SpanHeader'
 import PriductCard from '../components/PriductCard'
+import CartProduct from '../components/CartProduct'
 
 const CartPage = () => {
 
-    const [product, setProduct] = useState()
+    const [cart, setCart] = useState()
 
     useEffect(() => {
-        let info = {id :JSON.parse(localStorage.getItem('user')).id}
-        axios.get('http://localhost:4000/customer/cart-items').then((res) => {
-            console.log(res.data)
-            setProduct(res.data)
+        let info = {user_id :JSON.parse(localStorage.getItem('user')).userId}
+        axios.get('http://localhost:4000/customer/cart-items',{params:info}).then((res) => {
+            let res1 = JSON.stringify(res.data)
+            console.log("cart items"+res1)
+            setCart(res.data)
         }).catch((err) => {
             console.log(err)
         })
-    },[])
+    },[cart])
 
     return (
         <div className=' h-screen font-sans'>
             <Header />
             <SpanHeader />
-            <div className='w-full mt-[30px] grid grid-cols-4 p-[150px] justify-start bg-gray-100'>
-                {product && product.map((data) => <PriductCard key={data._id} type="customer" id={data.company} name={data.productName} url={data.Image} quantity={data.quantity} price={data.price} />)}
+            <div className='w-full p-[150px] bg-gray-100 flex flex-col justify-start items-center'>
+                {cart && cart.map((data) => <CartProduct key={data._id} id={data._id} product={data.product}/>)}
             </div>
         </div>
     )

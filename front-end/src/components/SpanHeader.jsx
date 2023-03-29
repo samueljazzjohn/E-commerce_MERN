@@ -19,7 +19,7 @@ const SpanHeader = () => {
       setData(JSON.parse(localStorage.getItem('user')))
       let info = {user_id : JSON.parse(localStorage.getItem('user')).userId}
       axios.get('http://localhost:4000/customer/get-cart',{params:info}).then((res)=>{
-        console.log(res.data)
+        // console.log(res.data)
         getCart(res.data)
       }).catch((err)=>{
         console.log(err)
