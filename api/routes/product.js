@@ -103,4 +103,30 @@ router.put('/update-quantity',(req,res,next)=>{
   })
 })
 
+
+// endpoint to update the quantity while deleting cart
+router.put('/add-quantity',(req,res,next)=>{
+  console.log(req.body)
+  let newQuantity = req.body.quantity + 1
+  console.log(newQuantity)
+  productModel.updateOne({_id:req.body.id},{quantity:newQuantity}).then((doc)=>{
+    return res.status(200).json(doc)
+  }).catch((err)=>{
+    console.log(err)
+    return res.status(400).json({"message":"error"})
+  })
+})
+
+// Endpoint for getting specific prodict
+router.get('/single-product',(req,res,next)=>{
+  // console.log(req.query)
+  productModel.findOne({_id:req.query.product}).then((doc)=>{
+    // console.log('single-------'+doc)
+    return res.status(200).json(doc)
+  }).catch((err)=>{
+    console.log(err)
+    return res.status(400).json({"message":"error"})
+  })
+})
+
 module.exports = router;

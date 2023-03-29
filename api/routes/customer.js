@@ -29,9 +29,7 @@ router.post('/add-item', (req, res, next) => {
 
 // Endpoint to get cartitems
 router.get('/get-cart', (req, res, next) => {
-    console.log(req.query)
     cartModel.find({ user: req.query.user_id }).then((doc) => {
-        console.log(doc)
         return res.status(200).json({ "count": doc.length })
     }).catch((err) => {
         return res.status(400).json({ "message": err })
@@ -40,26 +38,33 @@ router.get('/get-cart', (req, res, next) => {
 
 // Endpoint to get all cart product
 router.get('/cart-items', (req, res, next) => {
-    console.log(req.query)
-    let result = []
-    cartModel.find({ user: req.query.user_id }).then((doc) => {
+    let data = JSON.stringify(req.query)
+    let id = JSON.parse(data).user_id
+    // console.log("cart-items-------"+ id)
+    cartModel.find({ user: id }).then((doc) => {
         console.log(doc)
-        doc.forEach(Element => {
-            productModel.findOne({ id: Element.product }).then((product) => {
-                result.push(product)
-            }).catch((err) => {
-                console.log(err)
-                return res.status(400).json(err)
-
-            })
-        })
-        console.log("result ____"+result)
-        return res.status(200).json(result)
+        if(doc.length<=0) return res.status(401).json({"message":"no data"})
+        return res.status(200).json(doc)
     }).catch((err) => {
         console.log(err)
         return res.status(400).json(err)
     })
 
+})
+
+
+// Endpoint to delete cart
+router.delete('/delete-cart', (req, res, next) => {
+    let data = JSON.stringify(req.body)
+    let id = JSON.parse(data).id
+    cartModel.deleteOne({_id:id}).then((doc) => {
+        if (doc.acknowledged && doc.deletedCount == 1){
+            return res.status(200).json({ "message": "success" })
+        }
+        return res.status(400).json({ "message": "nothing deleted" })
+    }).catch((err) => {
+        return res.status(400).json({ "message": err })
+    })
 })
 
 module.exports = router;
