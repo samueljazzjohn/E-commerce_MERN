@@ -119,9 +119,7 @@ router.put('/add-quantity',(req,res,next)=>{
 
 // Endpoint for getting specific prodict
 router.get('/single-product',(req,res,next)=>{
-  // console.log(req.query)
   productModel.findOne({_id:req.query.product}).then((doc)=>{
-    // console.log('single-------'+doc)
     return res.status(200).json(doc)
   }).catch((err)=>{
     console.log(err)
