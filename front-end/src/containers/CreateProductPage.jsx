@@ -46,7 +46,7 @@ const CreateProductPage = () => {
     return (
         <div className='h-screen bg-[rgb(234,234,234)] snap-y snap-mandatory overflow-scroll z-0 text-gray-700 flex items-center justify-center'>
             <form className=' flex flex-col sm:w-[80%] md:w-[35%]' onSubmit={handleSubmit(onSubmit)}>
-                <div className='mx-auto mb-8'><span className='text-[28px] text-black font-[800] uppercase mb-8'>Register</span></div>
+                <div className='mx-auto mb-8'><span className='text-[28px] text-black font-[800] uppercase mb-8'>Create product</span></div>
                 <input className='px-6 py-2 mb-3 sm:80% border bg-transparent border-[#242424] rounded-full uppercase text-xs tracking-widest text-gray-500 transition-all   ' placeholder='Product Name' id="product" {...register('product', { required: true, maxLength: 30 })} />
                 {errors.name && errors.name.type === "required" && <span>This is required</span>}
                 {errors.name && errors.name.type === "maxLength" && <span>Max length exceeded</span>}
@@ -66,7 +66,7 @@ const CreateProductPage = () => {
                     )}
                 />
                 <div className='flex flex-row justify-center mt-4'>
-                    <input className='px-6 py-2 mb-3 border border-[#242424] mr-3 text-yellow-50  bg-[#242424] cursor-pointer rounded-full uppercase text-xs tracking-widest transition-all' type="submit" value='REGISTER' />
+                    <input className='px-6 py-2 mb-3 border border-[#242424] mr-3 text-yellow-50  bg-[#242424] cursor-pointer rounded-full uppercase text-xs tracking-widest transition-all' type="submit" value='create' />
                     <input className='px-6 py-2 mb-3 border border-[#242424] text-yellow-50  bg-[#242424] cursor-pointer rounded-full uppercase text-xs tracking-widest transition-all' type="button" onClick={backButton} value='BACK' />
                 </div>
             </form>
